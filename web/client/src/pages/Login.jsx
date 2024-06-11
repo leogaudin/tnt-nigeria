@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   Stack,
+  SvgIcon,
   Typography
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -14,13 +15,15 @@ import { useEffect, useState, useContext } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { FormTextField } from '../components/customisation/FormTextField';
 import { useTranslation } from 'react-i18next';
-import {sha512} from 'js-sha512';
+import { sha512 } from 'js-sha512';
 import AppContext from '../context/AppContext';
+import { createPalette } from '../theme/create-palette';
 
 function Login() {
   const navigate = useNavigate();
+  const palette = createPalette();
   const [isAuth, setIsAuth] = useState(false);
-  const {isMobile} = useContext(AppContext);
+  const { isMobile } = useContext(AppContext);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -139,7 +142,39 @@ function Login() {
             </form>
           </div>
         </Card>
-        { isMobile ? null : <Globe />}
+        {isMobile
+          ? null
+          : (
+            <>
+              <Globe />
+              <Stack
+                paddingX={4}
+                paddingY={2}
+                borderRadius={"10px 0 0 0"}
+                style={{
+                  backgroundColor: palette.primary.main,
+                  color: palette.primary.darkest,
+                  position: 'absolute',
+                  bottom: 0,
+                  right: 0
+                }}>
+                <Typography variant='overline'>
+                  Funded by
+                </Typography>
+                <Stack direction='row' spacing={2} alignItems='center'>
+                  <img
+                    src="/world_bank.svg"
+                    width={100}
+                  />
+                  <img
+                    src="/usaid.svg"
+                    width={100}
+                  />
+                </Stack>
+              </Stack>
+            </>
+          )
+        }
       </Box>
     </>
   );
