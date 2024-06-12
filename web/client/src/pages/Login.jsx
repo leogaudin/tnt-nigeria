@@ -5,7 +5,6 @@ import {
   Button,
   Card,
   Stack,
-  SvgIcon,
   Typography
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -150,23 +149,25 @@ function Login() {
               <Stack
                 paddingX={4}
                 paddingY={2}
-                borderRadius={"10px 0 0 0"}
+                borderRadius={"0 10px 0 0"}
                 style={{
                   backgroundColor: palette.primary.main,
                   color: palette.primary.darkest,
                   position: 'absolute',
                   bottom: 0,
-                  right: 0
+                  left: 0
                 }}>
                 <Typography variant='overline'>
                   Funded by
                 </Typography>
                 <Stack direction='row' spacing={2} alignItems='center'>
                   <img
+                    alt='World Bank'
                     src="/world_bank.svg"
                     width={100}
                   />
                   <img
+                    alt='USAID'
                     src="/usaid.svg"
                     width={100}
                   />
