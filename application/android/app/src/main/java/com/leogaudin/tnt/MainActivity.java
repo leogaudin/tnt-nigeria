@@ -1,4 +1,4 @@
-package com.gaudin.tntnigeria;
+package com.gaudin.dainigeriatnt;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

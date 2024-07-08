@@ -93,13 +93,13 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.gaudin.tntnigeria"
+    namespace "com.gaudin.dainigeriatnt"
     defaultConfig {
-        applicationId "com.gaudin.tntnigeria"
+        applicationId "com.gaudin.dainigeriatnt"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 10000
-        versionName "1.0.0"
+        versionCode 10002
+        versionName "1.0.2"
         missingDimensionStrategy 'react-native-camera', 'general'
     }
 
