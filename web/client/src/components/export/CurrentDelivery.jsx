@@ -64,8 +64,8 @@ export default function CurrentDelivery({boxes}) {
 
 			return {
 				id: box.id,
-				district: box.district,
-				zone: box.zone,
+				state: box.state,
+				lgea: box.lgea,
 				school: box.school,
 				// schoolLatitude: box.schoolLatitude,
 				// schoolLongitude: box.schoolLongitude,
