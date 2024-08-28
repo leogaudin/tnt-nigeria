@@ -10,7 +10,7 @@ import Boxes from './pages/Boxes';
 import Scans from './pages/Scans';
 import PublicInsights from './pages/PublicInsights';
 import Login from './pages/Login';
-// import Register from './pages/Register';
+import Register from './pages/Register';
 import Export from './pages/Export';
 import RequireAuth from './components/controls/RequireAuth';
 import Logout from './pages/Logout';
@@ -23,6 +23,7 @@ import { useTranslation } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import WaitForContext from './components/controls/WaitForContext';
+import Advanced from './pages/Advanced';
 
 export const theme = createTheme();
 
@@ -84,8 +85,16 @@ function App() {
                   </RequireAuth>
                   }
                 />
+                <Route path='/advanced' element={
+                  <RequireAuth>
+                    <WaitForContext>
+                      <Advanced />
+                    </WaitForContext>
+                  </RequireAuth>
+                  }
+                />
                 <Route path='/login' element={<Login />} />
-                {/* <Route path='/register' element={<Register />} /> */}
+                <Route path='/register' element={<Register />} />
                 <Route path='/logout' element={<Logout />} />
               </Routes>
             </AppProvider>
