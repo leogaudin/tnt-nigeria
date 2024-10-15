@@ -31,7 +31,6 @@ export default function CurrentDelivery({boxes}) {
 		const toExport = boxes.map(box => {
 			const lastDeliveredScan = getLastFinalScan(box);
 			const lastMarkedAsReceivedScan = getLastMarkedAsReceivedScan(box);
-			const lastInProgressScan = getLastInProgressScan(box);
 			const lastScan = box.scans ? box.scans[box.scans.length - 1] : null;
 
 			// Calculate the distance between the school and the last delivered scan in meters
@@ -53,15 +52,9 @@ export default function CurrentDelivery({boxes}) {
 				accuracy: lastMarkedAsReceivedScan?.location?.coords.accuracy
 			} : null;
 
-			const inProgressCoords = lastInProgressScan ? {
-				latitude: lastInProgressScan?.location?.coords.latitude,
-				longitude: lastInProgressScan?.location?.coords.longitude,
-				accuracy: lastInProgressScan?.location?.coords.accuracy
-			} : null;
-
 			const deliveredDistanceInMeters = deliveredCoords ? Math.round(haversineDistance(schoolCoords, deliveredCoords)) : '';
 			const receivedDistanceInMeters = receivedCoords ? Math.round(haversineDistance(schoolCoords, receivedCoords)) : '';
-			const inProgressDistanceInMeters = inProgressCoords ? Math.round(haversineDistance(schoolCoords, inProgressCoords)) : '';
+			const lastScanDistanceInMeters = lastScan ? Math.round(haversineDistance(schoolCoords, lastScan.location.coords)) : '';
 
 			return {
 				id: box.id,
@@ -72,16 +65,15 @@ export default function CurrentDelivery({boxes}) {
 				schoolLongitude: box.schoolLongitude,
 				lastScanLatitude: lastScan?.location?.coords.latitude || '',
 				lastScanLongitude: lastScan?.location?.coords.longitude || '',
+				lastScanDistanceInMeters,
+				lastScanDate: lastScan ? new Date(lastScan?.location.timestamp).toLocaleDateString() : '',
 				delivered: !!lastDeliveredScan,
-				deliveredDistanceInMeters,
-				deliveredDate: lastDeliveredScan ? new Date(lastDeliveredScan?.location.timestamp).toLocaleDateString() : '',
+				// deliveredDistanceInMeters,
+				// deliveredDate: lastDeliveredScan ? new Date(lastDeliveredScan?.location.timestamp).toLocaleDateString() : '',
 				received: !!lastMarkedAsReceivedScan,
 				receivedDistanceInMeters,
 				receivedDate: lastMarkedAsReceivedScan ? new Date(lastMarkedAsReceivedScan?.location.timestamp).toLocaleDateString() : '',
-				inProgress: !!lastInProgressScan,
-				inProgressDistanceInMeters,
-				inProgressDate: lastInProgressScan ? new Date(lastInProgressScan?.location.timestamp).toLocaleDateString() : '',
-				validated: !!lastMarkedAsReceivedScan && !!lastDeliveredScan,
+				// validated: !!lastMarkedAsReceivedScan && !!lastDeliveredScan,
 			}
 		});
 		setToExport(toExport);
