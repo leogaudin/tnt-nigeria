@@ -31,6 +31,8 @@ export default function CurrentDelivery({boxes}) {
 		const toExport = boxes.map(box => {
 			const lastDeliveredScan = getLastFinalScan(box);
 			const lastMarkedAsReceivedScan = getLastMarkedAsReceivedScan(box);
+			// Sort the scans by timestamp and get the last one
+			box.scans.sort((a, b) => new Date(b.location.timestamp) - new Date(a.location.timestamp));
 			const lastScan = box.scans ? box.scans[box.scans.length - 1] : null;
 
 			// Calculate the distance between the school and the last delivered scan in meters
