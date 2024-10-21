@@ -28,7 +28,8 @@ export default function NotScannedSince({sample}) {
 
 		sample.forEach(box => {
 			if (box.scans && box.scans.length > 0) {
-				const lastScan = box.scans[box.scans.length - 1];
+				box.scans.sort((a, b) => new Date(b.location.timestamp) - new Date(a.location.timestamp));
+				const lastScan = box.scans[0];
 				if (lastScan.time > sinceTimestamp)
 					data[0].value++;
 				else

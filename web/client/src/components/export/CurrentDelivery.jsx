@@ -1,4 +1,4 @@
-import { getLastFinalScan, getLastInProgressScan, getLastMarkedAsReceivedScan } from "../../service";
+import { getLastFinalScan, getLastInProgressScan, getLastMarkedAsReceivedScan, getLastValidatedScan } from "../../service";
 import DownloadMenu from "./DownloadMenu";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -31,7 +31,7 @@ export default function CurrentDelivery({boxes}) {
 		const toExport = boxes.map(box => {
 			const lastDeliveredScan = getLastFinalScan(box);
 			const lastMarkedAsReceivedScan = getLastMarkedAsReceivedScan(box);
-			// Sort the scans by timestamp and get the last one
+			const lastValidatedScan = getLastValidatedScan(box);
 			box.scans.sort((a, b) => new Date(b.location.timestamp) - new Date(a.location.timestamp));
 			const lastScan = box.scans ? box.scans[0] : null;
 
@@ -42,11 +42,11 @@ export default function CurrentDelivery({boxes}) {
 				accuracy: 1
 			};
 
-			const deliveredCoords = lastDeliveredScan ? {
-				latitude: lastDeliveredScan?.location?.coords.latitude,
-				longitude: lastDeliveredScan?.location?.coords.longitude,
-				accuracy: lastDeliveredScan?.location?.coords.accuracy
-			} : null;
+			// const deliveredCoords = lastDeliveredScan ? {
+			// 	latitude: lastDeliveredScan?.location?.coords.latitude,
+			// 	longitude: lastDeliveredScan?.location?.coords.longitude,
+			// 	accuracy: lastDeliveredScan?.location?.coords.accuracy
+			// } : null;
 
 			const receivedCoords = lastMarkedAsReceivedScan ? {
 				latitude: lastMarkedAsReceivedScan?.location?.coords.latitude,
@@ -54,7 +54,7 @@ export default function CurrentDelivery({boxes}) {
 				accuracy: lastMarkedAsReceivedScan?.location?.coords.accuracy
 			} : null;
 
-			const deliveredDistanceInMeters = deliveredCoords ? Math.round(haversineDistance(schoolCoords, deliveredCoords)) : '';
+			// const deliveredDistanceInMeters = deliveredCoords ? Math.round(haversineDistance(schoolCoords, deliveredCoords)) : '';
 			const receivedDistanceInMeters = receivedCoords ? Math.round(haversineDistance(schoolCoords, receivedCoords)) : '';
 			const lastScanDistanceInMeters = lastScan ? Math.round(haversineDistance(schoolCoords, lastScan.location.coords)) : '';
 
@@ -71,11 +71,12 @@ export default function CurrentDelivery({boxes}) {
 				lastScanDate: lastScan ? new Date(lastScan?.location.timestamp).toLocaleDateString() : '',
 				delivered: !!lastDeliveredScan,
 				// deliveredDistanceInMeters,
-				// deliveredDate: lastDeliveredScan ? new Date(lastDeliveredScan?.location.timestamp).toLocaleDateString() : '',
+				deliveredDate: lastDeliveredScan ? new Date(lastDeliveredScan?.location.timestamp).toLocaleDateString() : '',
 				received: !!lastMarkedAsReceivedScan,
 				receivedDistanceInMeters,
 				receivedDate: lastMarkedAsReceivedScan ? new Date(lastMarkedAsReceivedScan?.location.timestamp).toLocaleDateString() : '',
-				// validated: !!lastMarkedAsReceivedScan && !!lastDeliveredScan,
+				validated: !!lastValidatedScan,
+				validatedDate: lastValidatedScan ? new Date(lastValidatedScan?.location.timestamp).toLocaleDateString() : '',
 			}
 		});
 		setToExport(toExport);
