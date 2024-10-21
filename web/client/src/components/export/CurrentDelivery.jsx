@@ -33,7 +33,7 @@ export default function CurrentDelivery({boxes}) {
 			const lastMarkedAsReceivedScan = getLastMarkedAsReceivedScan(box);
 			// Sort the scans by timestamp and get the last one
 			box.scans.sort((a, b) => new Date(b.location.timestamp) - new Date(a.location.timestamp));
-			const lastScan = box.scans ? box.scans[box.scans.length - 1] : null;
+			const lastScan = box.scans ? box.scans[0] : null;
 
 			// Calculate the distance between the school and the last delivered scan in meters
 			const schoolCoords = {
