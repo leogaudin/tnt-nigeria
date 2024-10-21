@@ -147,3 +147,13 @@ export function getLastInProgressScan(box) {
     return acc.time > scan.time ? acc : scan;
   });
 }
+
+export function getLastValidatedScan(box) {
+	const scans = box.scans;
+	if (!scans || !scans.length) return null;
+	const validatedScans = scans.filter(scan => scan.finalDestination && scan.markedAsReceived);
+	if (!validatedScans.length) return null;
+	return validatedScans.reduce((acc, scan) => {
+		return acc.time > scan.time ? acc : scan;
+	});
+}
