@@ -1,31 +1,29 @@
-import { getLastFinalScan, getLastMarkedAsReceivedScan } from ".";
+import { getLastFinalScan, getLastMarkedAsReceivedScan, getLastValidatedScan } from ".";
 
 export function getProgress(box) {
 	if (!box?.scans || box?.scans?.length === 0) {
-		return "noscans";
+		return 'noScans';
 	}
 
+	const lastValidatedScan = getLastValidatedScan(box);
 	const lastFinalScan = getLastFinalScan(box);
 	const lastReceivedScan = getLastMarkedAsReceivedScan(box);
 
-	if (lastFinalScan) {
-		if (lastReceivedScan) {
-			return "validated";
-		}
-		return "delivered";
+	if (lastValidatedScan) {
+		return 'validated';
 	}
-	if (lastReceivedScan) {
-		return "received";
+
+	if (lastFinalScan || lastReceivedScan) {
+		return 'reachedOrReceived';
 	}
-	return "inprogress";
+
+	return 'inProgress';
 }
 
 export function getStatusPercentage(sample, status = "delivered") {
-	sample.forEach(box => {
-		box.progress = getProgress(box);
-	});
+	const boxes = sample.map(box => { return { ...box, progress: getProgress(box) } });
 
-	const deliveredBoxes = sample.filter(box => box.progress === status).length;
+	const deliveredBoxes = boxes.filter(box => box.progress === status).length;
 
 	return (deliveredBoxes / sample.length) * 100;
 }
