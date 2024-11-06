@@ -1,4 +1,4 @@
-package com.tnt.scanner
+package com.tntnigeria.scanner
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
