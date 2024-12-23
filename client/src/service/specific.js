@@ -43,8 +43,7 @@ export const boxFields = {
 // - Report.jsx
 // - csv.js
 export const essentialFields = [
-	'school',
-	'state',
+	'schoolCode',
 ]
 
 // Keys that should not be available to the user (e.g. when filtering)

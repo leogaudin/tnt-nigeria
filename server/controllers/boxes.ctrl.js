@@ -86,7 +86,7 @@ router.post('/boxes/coords', async (req, res) => {
 			const boxUpdate = boxes.map((box) => {
 				return {
 					updateMany: {
-						filter: { school: box.school, district: box.district, adminId: admin.id },
+						filter: { schoolCode: box.schoolCode, adminId: admin.id },
 						update: { $set: { schoolLatitude: box.schoolLatitude, schoolLongitude: box.schoolLongitude } },
 						multi: true,
 					},
@@ -102,12 +102,12 @@ router.post('/boxes/coords', async (req, res) => {
 
 			const boxesToUpdate = await Box.find({
 				adminId: admin.id,
-				$or: boxes.map((box) => ({ school: box.school, district: box.district }))
+				$or: boxes.map((box) => ({ schoolCode: box.schoolCode })),
 			});
 
 			const scansUpdate = boxesToUpdate
 				.filter((box) => {
-					const boxFromRequest = boxes.find((b) => b.school === box.school && b.district === box.district);
+					const boxFromRequest = boxes.find((b) => b.schoolCode === box.schoolCode);
 					return boxFromRequest.schoolLatitude !== box.schoolLatitude || boxFromRequest.schoolLongitude !== box.schoolLongitude;
 				})
 				.map((box) => {
