@@ -50,7 +50,7 @@ export const gpsUpdateFields = [
 // - Report.jsx
 export const reportFields = [
 	'school',
-	'district',
+	'state',
 ]
 
 // Keys that should not be available to the user (e.g. when filtering)
