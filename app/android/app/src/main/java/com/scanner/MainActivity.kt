@@ -1,4 +1,4 @@
-package com.tntnigeria.scanner
+package com.gaudin.dainigeriatnt
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

@@ -1,4 +1,4 @@
-package com.tntnigeria.scanner
+package com.gaudin.dainigeriatnt
 
 import android.app.Application
 import com.facebook.react.PackageList
